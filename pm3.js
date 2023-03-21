@@ -1,6 +1,6 @@
 // Create the Frame dimensions
 let FRAME_HEIGHT = 500;
-let FRAME_WIDTH = 500;
+let FRAME_WIDTH = 700;
 let MARGINS = {left: 50, right: 50, top: 50, bottom: 50};
 
 
@@ -39,10 +39,17 @@ d3.csv("albanyData.csv").then((data) => {
     return d.year
   }));
 
+
+  const deathValues = [];
+  data.map((d) => {
+    deathValues.push(parseInt(d.deaths))
+  })
+  console.log(deathValues)
+  console.log(d3.max(deathValues))
+
+
   // max values for y-axis
-  yScaleBar.domain([0, d3.max(data, (d) => {
-    return d.deaths
-  })]);
+  yScaleBar.domain([0, d3.max(deathValues)]);
 
 // create bar chart
 BAR_CHART_FRAME.selectAll("bars")
@@ -134,7 +141,7 @@ d3.json("ny_counties.geojson")
     */
     // data is of all counties of all states in U.S. , must filter only those from NYS
     let nyCounties = data.features.filter(function(feature) {
-      return feature.properties.STATE.substring(0, 2) === '36';
+      return feature.properties.STATE == '36';
     });
 
     // create projection and set location on webpage
