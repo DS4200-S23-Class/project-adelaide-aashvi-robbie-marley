@@ -4,42 +4,60 @@
 <head>
     <meta charset=utf-8/>
     <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="js/d3.v6.1.1/d3.min.js"></script>
+    <script src="https://d3js.org/topojson.v3.min.js"></script>
 
-    <title>TODO: Opioid Use in NYS </title>
+    <title>Opioid Use in NYS </title>
 </head>
 
 
 <body>
 
-    <h1>TODO: Analyzing Opioid Deaths in New York </h1>
+    <h1>Analyzing Opioid Deaths in New York State from 2003-2019</h1>
 
     <div>
-        <h2> In order to highlight the severity of the opioid crisis that has ravaged New York State, a visualization tool will be designed for public health officials who want to track the number of opioid-related deaths that have occurred over the last two decades per county and by human characteristics.</h2>
-        TODO: 
+        <h2> Motivation:</h2>
+        <div>The main motivation behind our data visualization project is to provide insight on the severity of the opioid epidemic in New York State from 2003-2019. Falling within the realm of public health, our data visualization tool aims to aid public health officials in tracking trends in opioid poisoning deaths across all counties in New York State. This crisis is not easily solvable, but this visualization tool can help public health departments and local government agencies identify areas in dire need of drug/overdose prevention assistance, and push for the necessary policies to be passed by local and state governments. Additionally, the tool could be made publicly available for educational purposes, thereby informing the public of the current status of the opioid crisis and how it is affecting their community. Addressing this problem is incredibly important to our communities, seeing as we are losing an entire generation of people to opioid-related drug overdoses. Continuing to do work in this area of study could save lives.</div>
     </div>
 
     <div>
         <h2>Background</h2>
-        TODO: Add link to report, demo video, link to data etc. here  
+        
+        <div>Data:
+
+            <div> The tool will utilize data from a New York State public health database titled, Vital Statistics: Opioid-Related Deaths by County: Beginning 2003.  In terms of biases in the dataset, this information must have been collected at the county level, and later conglomerated by New York State. It is possible that inconsistencies in data collection among numerous local departments may skew numbers for certain counties. We will also use the Opioid-Related Deaths by Age Group dataset from New York State to provide additional insights using various demographic data. In terms of biases in the data, it is possible that the limited range for representing race/ethnicity may skew the numbers inaccurately to one category. By not having proper representation, the data does not provide an accurate picture of the most afflicted groups.The visualization will have multiple components, starting with an interactive map of New York State separated by county. Hovering over a particular county will highlight its area on the map and display its name. Simultaneously, a bar chart will display the total number of opioid related deaths (per year) that have occurred in that specific county from 2003 to 2022. This will allow public health officials to visualize trends in the frequency of opioid-related mortality in a particular county. Additionally, there will be a bar chart that presents the sum-total (all years added together) of opioid-related deaths for each New York county. We will also have a third graphic that allows the user to filter certain demographic data, and display the number of opioid related deaths affecting that demographic. Both datasets used had little to no quality issues. </div>
+        <div>
+            <br>
+            Link to Data:
+
+            <div>Opioid-Related Deaths by County: 
+                https://health.data.ny.gov/Health/Vital-Statistics-Opioid-Related-Deaths-by-County-B/sn5m-dv52</div>
+            <div>Opioid-Related Deaths by Age Group:
+                https://health.data.ny.gov/Health/Vital-Statistics-Opioid-Related-Deaths-by-Age-Grou/qabx-2sqw</div>
+            <div>New York Counties JSON: https://eric.clst.org/assets/wiki/uploads/Stuff/gz_2010_us_050_00_500k.json</div>
+        </div>
+        </div> 
     </div>
 
     <div>
         <h2>Visualization</h2>
-        TODO: Build your visualization tool here  
-
+        
         <div class="bar-chart">
-
+            <h3>Total Number of Opioid Deaths Per Year (Albany)</h3>
         </div>
 
-
+        <div class="nys-map">
+            <h3>Map of New York State</h3>
+        </div>
 
     </div>
 
     <div>
         <h2>Acknowledgements</h2>
-        TODO: Cite resources used here   
+        <li><a href="https://www.tutorialsteacher.com/d3js/create-bar-chart-using-d3js">Resource 1</a></li>
+        <li><a href="https://github.com/d3/d3-geo">Resource 2</a></li>
+        <li><a href="https://observablehq.com/@mprasse/week-11-intro-to-d3-js-mapping-data-with-d3">Resource 3</a></li>  
     </div>
-
 
     <script src="pm3.js"></script>
 </body>

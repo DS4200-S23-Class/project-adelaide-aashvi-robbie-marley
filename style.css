@@ -5,3 +5,23 @@ body {
 h1 {
     text-align: center;
 }
+
+/* format bar graph  */
+.bars {
+    display: flex;
+    fill: blue;
+    flex-direction: row;
+}
+
+/* bar graph hover color */
+.bars:hover {
+    fill: orange;
+}
+
+/* format bar graph tooltip2 */
+.tooltip2{
+    position: absolute;
+    background-color: grey;
+    border: solid;
+    padding: 5px;
+}
