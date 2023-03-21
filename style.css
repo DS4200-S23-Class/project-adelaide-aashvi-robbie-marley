@@ -5,3 +5,10 @@ body {
 h1 {
     text-align: center;
 }
+
+/* format bar graph  */
+.bar {
+    display: flex;
+    fill: blue;
+    flex-direction: row;
+}
