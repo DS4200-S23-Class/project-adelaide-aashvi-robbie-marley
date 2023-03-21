@@ -7,14 +7,14 @@ h1 {
 }
 
 /* format bar graph  */
-.bars {
+.bar {
     display: flex;
     fill: blue;
     flex-direction: row;
 }
 
 /* bar graph hover color */
-.bars:hover {
+.bar:hover {
     fill: orange;
 }
 
