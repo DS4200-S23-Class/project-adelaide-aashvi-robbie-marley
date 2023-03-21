@@ -123,6 +123,15 @@ let MAP_FRAME = d3.select('.nys-map')
 // read in json file 
 d3.json("ny_counties.geojson")
   .then(function(data) {
+
+
+
+    /*
+    DS4200
+    PM-03
+    Robert Hoyler, Adelaide Bsharah, Aashvi Shah, Marley Ferguson
+    Consulted resource for filtering through JSON file: https://stackoverflow.com/questions/33604239/how-to-filter-d3-data
+    */
     // data is of all counties of all states in U.S. , must filter only those from NYS
     let nyCounties = data.features.filter(function(feature) {
       return feature.properties.STATE.substring(0, 2) === '36';
