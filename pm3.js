@@ -3,6 +3,14 @@ let FRAME_HEIGHT = 500;
 let FRAME_WIDTH = 500;
 let MARGINS = {left: 50, right: 50, top: 50, bottom: 50};
 
+
+/*
+DS4200
+PM-03
+Robert Hoyler, Adelaide Bsharah, Aashvi Shah, Marley Ferguson
+Consulted resource for basic bar chart: https://www.tutorialsteacher.com/d3js/create-bar-chart-using-d3js
+*/
+
 // Bar Chart: Deaths per County from 2003-2019
 
 let BAR_CHART_FRAME = d3.select('.bar-chart')
@@ -60,6 +68,15 @@ BAR_CHART_FRAME.selectAll("bars")
 
 })
 
+/*
+DS4200
+PM-03
+Robert Hoyler, Adelaide Bsharah, Aashvi Shah, Marley Ferguson
+Consulted resource for creating map from JSON data using d3: https://observablehq.com/@mprasse/week-11-intro-to-d3-js-mapping-data-with-d3
+*/
+
+// Map of New York State w/ Counties
+
 let MAP_FRAME = d3.select('.nys-map')
 .append("svg")
 .attr("width", FRAME_WIDTH)
@@ -91,74 +108,7 @@ d3.json("ny_counties.geojson")
       .attr("fill", "lightblue")
       .attr("stroke", "white");
 
-      const TOOLTIP2 = d3.select(".nys-map")
-      .append("div")
-      .attr("class", "tooltip2")
-      .style("opacity", 0);
-
-      // mouse over
-    function handleMouseOver(event, d){
-      TOOLTIP2.style("opacity", 1);
-  }
-
-  // mouse move
-  function handleMouseMove(event, d){
-      TOOLTIP2.html("County: " + d.properties.NAME)
-          .style("left", (event.pageX + 10) + "px")
-          .style("top", (event.pageY - 50) + "px");
-  }
-
-  // mouse leave
-  function handleMouseLeave(event, d){
-      TOOLTIP2.style("opacity", 0);
-  }
-
-      // add event listeners
-      FRAME2.selectAll(".bar")
-      .on("mouseover", handleMouseOver)
-      .on("mousemove", handleMouseMove)
-      .on("mouseleave", handleMouseLeave);
-
   })
-
-  
-
-
-// New York State Map: Counties
-
-// let width = 500;
-// let height = 500;
-
-// d3.json("ny_counties.geojson")
-//   .then(function(data) {
-//     let nyCounties = data.features.filter(function(feature) {
-//       return feature.properties.STATE.substring(0, 2) === '36';
-//     });
-    
-    // let projection = d3.geoAlbers()
-    //   .center([0, 40])
-    //   .rotate([74, 0])
-    //   .scale(4000)
-    //   .translate([width / 1.5, height / 1.2]);
-
-    // let path = d3.geoPath()
-    //   .projection(projection);
-
-    // let svg = d3.select("body")
-    //   .append("svg")
-    //   .attr("width", width)
-    //   .attr("height", height);
-
-    // let g = svg.append("g");
-
-    // g.selectAll("path")
-    //   .data(nyCounties)
-    //   .enter()
-    //   .append("path")
-    //   .attr("d", path)
-    //   .attr("fill", "lightgray")
-    //   .attr("stroke", "white");
-  // });
 
 
 
