@@ -25,3 +25,16 @@ h1 {
     border: solid;
     padding: 5px;
 }
+
+/* format bar graph tooltip2 */
+.tooltip3{
+    position: absolute;
+    background-color: grey;
+    border: solid;
+    padding: 5px;
+    fill: orange
+}
+
+.path:hover{
+    fill: orange;
+}

@@ -131,8 +131,6 @@ let MAP_FRAME = d3.select('.nys-map')
 d3.json("ny_counties.geojson")
   .then(function(data) {
 
-
-
     /*
     DS4200
     PM-03
@@ -166,6 +164,36 @@ d3.json("ny_counties.geojson")
       .attr("d", path)
       .attr("fill", "lightblue")
       .attr("stroke", "white");
+
+
+    const TOOLTIP3 = d3.select(".nys-map")
+          .append("div")
+          .attr("class", "tooltip3")
+          .style("opacity", 0);
+
+    // mouse over
+    function handleMouseOver3(event, d){
+      TOOLTIP3.style("opacity", 1);
+      console.log("hi")
+  }
+
+  // mouse move
+  function handleMouseMove3(event, d){
+    TOOLTIP3.html("County: " )
+        .style("left", (event.pageX + 10) + "px")
+        .style("top", (event.pageY - 50) + "px");
+}
+
+// mouse leave
+function handleMouseLeave3(event, d){
+    TOOLTIP3.style("opacity", 0);
+}
+
+// add event listeners
+g.on("mouseover", handleMouseOver3)
+    .on("mousemove", handleMouseMove3)
+    .on("mouseleave", handleMouseLeave3);
+
   })
 
 
