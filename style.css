@@ -32,9 +32,8 @@ h1 {
     background-color: grey;
     border: solid;
     padding: 5px;
-    fill: orange
 }
 
-.path:hover{
+.nyCounties:hover{
     fill: orange;
 }

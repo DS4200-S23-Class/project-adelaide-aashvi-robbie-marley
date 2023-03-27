@@ -163,7 +163,23 @@ d3.json("ny_counties.geojson")
       .append("path")
       .attr("d", path)
       .attr("fill", "lightblue")
-      .attr("stroke", "white");
+      .attr("stroke", "white")
+
+      /*
+       DS4200
+       PM-04
+       Robert Hoyler, Adelaide Bsharah, Aashvi Shah, Marley Ferguson
+       Consulted resource for highlight counties file: https://stackoverflow.com/questions/46641068/d3-mouseover-and-mouseout 
+      */
+
+      .on("mouseover", function() {
+        d3.select(this)
+          .attr("fill", "orange"); // path (county) will highlight orange when hovered over
+      })
+      .on("mouseout", function() { // path (county) will revert back to map color
+        d3.select(this)
+          .attr("fill", "lightblue");
+      });
 
 
     const TOOLTIP3 = d3.select(".nys-map")
