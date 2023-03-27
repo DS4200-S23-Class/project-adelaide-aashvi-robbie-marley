@@ -27,7 +27,7 @@ h1 {
 }
 
 /* format bar graph tooltip2 */
-.tooltip3{
+.tooltip{
     position: absolute;
     background-color: grey;
     border: solid;

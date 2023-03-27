@@ -24,7 +24,7 @@ const BAR_HEIGHT = FRAME_HEIGHT - MARGINS.top - MARGINS.bottom;
 const BAR_WIDTH = FRAME_WIDTH - MARGINS.left - MARGINS.right;
 
 d3.csv("countiesData.csv").then((data) => {
-  console.log(data)
+  // console.log(data)
 })
 
 // read in bar chart data
@@ -44,8 +44,8 @@ d3.csv("albanyData.csv").then((data) => {
   data.map((d) => {
     deathValues.push(parseInt(d.deaths))
   })
-  console.log(deathValues)
-  console.log(d3.max(deathValues))
+  // console.log(deathValues)
+  // console.log(d3.max(deathValues))
 
 
   // max values for y-axis
@@ -142,6 +142,9 @@ d3.json("ny_counties.geojson")
       return feature.properties.STATE == '36';
     });
 
+    // console.log(nyCounties)
+    // console.log(nyCounties[0].properties.NAME)
+
     // create projection and set location on webpage
     let projection = d3.geoAlbers()
       .center([0, 40])
@@ -156,6 +159,11 @@ d3.json("ny_counties.geojson")
     // append new map to frame
     let g = MAP_FRAME.append("g");
 
+    const TOOLTIP = d3.select(".nys-map")
+    .append("div")
+    .attr("class", "tooltip")
+    .style("opacity", 0);
+
     // add all "paths" (NYS Counties) to the object (attached to frame)
     g.selectAll("path")
       .data(nyCounties)
@@ -164,6 +172,8 @@ d3.json("ny_counties.geojson")
       .attr("d", path)
       .attr("fill", "lightblue")
       .attr("stroke", "white")
+      .attr("county", (d) => {return d.properties.NAME})
+      
 
       /*
        DS4200
@@ -175,41 +185,41 @@ d3.json("ny_counties.geojson")
       .on("mouseover", function() {
         d3.select(this)
           .attr("fill", "orange"); // path (county) will highlight orange when hovered over
+        console.log(d3.select(this).attr("county"))
       })
       .on("mouseout", function() { // path (county) will revert back to map color
         d3.select(this)
           .attr("fill", "lightblue");
-      });
+      })
+      ;
 
 
-    const TOOLTIP3 = d3.select(".nys-map")
-          .append("div")
-          .attr("class", "tooltip3")
-          .style("opacity", 0);
+    // const TOOLTIP = d3.select(".nys-map")
+    //       .append("div")
+    //       .attr("class", "tooltip")
+    //       .style("opacity", 0);
 
     // mouse over
-    function handleMouseOver3(event, d){
-      TOOLTIP3.style("opacity", 1);
-      console.log("hi")
+    function handleMouseOver(event, d){
+      TOOLTIP.style("opacity", 1);
   }
 
-  // mouse move
-  function handleMouseMove3(event, d){
-    TOOLTIP3.html("County: " )
+    // mouse move
+    function handleMouseMove(event, d){
+    TOOLTIP.html("County: " )
         .style("left", (event.pageX + 10) + "px")
         .style("top", (event.pageY - 50) + "px");
 }
 
 // mouse leave
-function handleMouseLeave3(event, d){
-    TOOLTIP3.style("opacity", 0);
+function handleMouseLeave(event, d){
+    TOOLTIP.style("opacity", 0);
 }
 
 // add event listeners
-g.on("mouseover", handleMouseOver3)
-    .on("mousemove", handleMouseMove3)
-    .on("mouseleave", handleMouseLeave3);
-
+g.on("mouseover", handleMouseOver)
+  .on("mousemove", handleMouseMove)
+  .on("mouseleave", handleMouseLeave);
   })
 
 
