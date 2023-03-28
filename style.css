@@ -9,7 +9,7 @@ h1 {
 /* format bar graph  */
 .bar {
     display: flex;
-    fill: darkblue;
+    fill: rgb(44, 123, 186);
     flex-direction: row;
 }
 

@@ -56,7 +56,7 @@ BAR_CHART_FRAME.selectAll("bars")
         .data(data)
         .enter().append("rect")
         .attr("class", "bar")
-        .attr("fill", "darkblue")
+        .attr("fill", "rgb(44, 123, 186)")
         .attr("x", (d) => {
             return (xScaleBar(d.year) + MARGINS.left)
         })
@@ -160,7 +160,7 @@ d3.json("ny_counties.geojson")
         countiesColors[d.county] = (d3.interpolateBlues(colorScale(d.deaths / maxVal)));
         // console.log(colorScale(d.deaths / maxVal))
       });
-      // console.log(countiesColors)
+      console.log(countiesColors)
 
       let countiesDeath = {};
       csvdata.forEach(function(d){
