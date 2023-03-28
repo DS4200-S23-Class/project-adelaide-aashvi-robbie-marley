@@ -12,7 +12,6 @@ Consulted resource for basic bar chart: https://www.tutorialsteacher.com/d3js/cr
 */
 
 // Bar Chart: Deaths per County from 2003-2019
-
 let BAR_CHART_FRAME = d3.select('.bar-chart')
                     .append("svg")
                     .attr("width", FRAME_WIDTH)
@@ -24,7 +23,7 @@ const BAR_HEIGHT = FRAME_HEIGHT - MARGINS.top - MARGINS.bottom;
 const BAR_WIDTH = FRAME_WIDTH - MARGINS.left - MARGINS.right;
 
 d3.csv("countiesData.csv").then((data) => {
-  // console.log(data)
+  console.log(data)
 })
 
 // read in bar chart data
@@ -153,7 +152,7 @@ d3.json("ny_counties.geojson")
                       .range([0,1]);
 
 
-      // create dictionary
+      // create dictionary for colors
       let countiesColors = {};
       csvdata.forEach(function(d){
         console.log(d.county)
@@ -162,14 +161,12 @@ d3.json("ny_counties.geojson")
       });
       console.log(countiesColors)
 
+      // create dictionary for deaths
       let countiesDeath = {};
       csvdata.forEach(function(d){
         countiesDeath[d.county] = d.deaths;
       })
       
-
-    
-
     // create projection and set location on webpage
     let projection = d3.geoAlbers()
       .center([0, 40])
@@ -201,12 +198,9 @@ d3.json("ny_counties.geojson")
       .append("path")
       .attr("d", path)
       .attr("fill", 
-      
       function(d){
         return countiesColors[d.properties.NAME];
-      }
-      
-      )
+      })
       .attr("stroke", "white")
       .attr("county", function(d) {return d.properties.NAME})
 
@@ -238,8 +232,9 @@ d3.json("ny_counties.geojson")
         .style("top", (event.pageY - 50) + "px")
         .text("County: " + d.properties.NAME + " || Total Deaths: " + countiesDeath[d.properties.NAME]); // return name of the county
       })
-
     });
+
+
 
   });
 
