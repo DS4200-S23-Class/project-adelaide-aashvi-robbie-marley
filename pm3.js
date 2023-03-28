@@ -142,6 +142,33 @@ d3.json("ny_counties.geojson")
       return feature.properties.STATE == '36';
     });
 
+    d3.csv("countiesMaxDeath - Sheet1 (1).csv").then(function(csvdata){
+
+      const maxVal = 3337;
+      // console.log(maxVal)
+
+      let colorScale = d3.scaleSequentialSqrt()
+                      .domain([0,1])
+                      .range([0,1]);
+
+
+      // create dictionary
+      let countiesColors = {};
+      csvdata.forEach(function(d){
+        console.log(d.county)
+        countiesColors[d.county] = (d3.interpolateBlues(colorScale(d.deaths / maxVal)));
+        // console.log(colorScale(d.deaths / maxVal))
+      });
+      // console.log(countiesColors)
+
+      let countiesDeath = {};
+      csvdata.forEach(function(d){
+        countiesDeath[d.county] = d.deaths;
+      })
+      
+
+    
+
     // create projection and set location on webpage
     let projection = d3.geoAlbers()
       .center([0, 40])
@@ -172,9 +199,15 @@ d3.json("ny_counties.geojson")
       .enter()
       .append("path")
       .attr("d", path)
-      .attr("fill", "lightblue")
+      .attr("fill", 
+      
+      function(d){
+        return countiesColors[d.properties.NAME];
+      }
+      
+      )
       .attr("stroke", "white")
-      .attr("county", (d) => {return d.properties.NAME})
+      .attr("county", function(d) {return d.properties.NAME})
 
       /*
        DS4200
@@ -193,19 +226,23 @@ d3.json("ny_counties.geojson")
       })
       .on("mouseout", function() { 
         d3.select(this)
-          .attr("fill", "lightblue"); // path (county) will revert back to map color
+          .attr("fill", function(d){
+            return countiesColors[d.properties.NAME];
+          }); // path (county) will revert back to map color
         d3.select("#tooltip").style("opacity", "0");
       })
       .on("mousemove", function(event, d){
         d3.select("#tooltip")
         .style("left", (event.pageX + 20) + "px")
         .style("top", (event.pageY - 50) + "px")
-        .text("County: " + d.properties.NAME); // return name of the county
+        .text("County: " + d.properties.NAME + " || Total Deaths: " + countiesDeath[d.properties.NAME]); // return name of the county
       })
 
-  })
+    });
+
+  });
 
 
 
-
+  
 
