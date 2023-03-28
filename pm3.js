@@ -24,7 +24,7 @@ const BAR_WIDTH = FRAME_WIDTH - MARGINS.left - MARGINS.right;
 
 d3.csv("countiesData.csv").then((data) => {
   console.log(data)
-})
+});
 
 // read in bar chart data
 d3.csv("albanyData.csv").then((data) => {
@@ -42,7 +42,7 @@ d3.csv("albanyData.csv").then((data) => {
   const deathValues = [];
   data.map((d) => {
     deathValues.push(parseInt(d.deaths))
-  })
+  });
   // console.log(deathValues)
   // console.log(d3.max(deathValues))
 
@@ -90,19 +90,19 @@ BAR_CHART_FRAME.selectAll("bars")
     // mouse over
     function handleMouseOver(event, d){
         TOOLTIP2.style("opacity", 1);
-    }
+    };
 
     // mouse move
     function handleMouseMove(event, d){
         TOOLTIP2.html("Year: " + d.year + "<br>Death Count: " + d.deaths)
             .style("left", (event.pageX + 10) + "px")
             .style("top", (event.pageY - 50) + "px");
-    }
+    };
 
     // mouse leave
     function handleMouseLeave(event, d){
         TOOLTIP2.style("opacity", 0);
-    }
+    };
 
     // add event listeners
     BAR_CHART_FRAME.selectAll(".bar")
@@ -110,7 +110,7 @@ BAR_CHART_FRAME.selectAll("bars")
         .on("mousemove", handleMouseMove)
         .on("mouseleave", handleMouseLeave);
 
-})
+});
 
 /*
 DS4200
@@ -165,7 +165,7 @@ d3.json("ny_counties.geojson")
       let countiesDeath = {};
       csvdata.forEach(function(d){
         countiesDeath[d.county] = d.deaths;
-      })
+      });
       
     // create projection and set location on webpage
     let projection = d3.geoAlbers()
