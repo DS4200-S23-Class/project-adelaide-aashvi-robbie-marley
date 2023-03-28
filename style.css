@@ -26,13 +26,13 @@ h1 {
     padding: 5px;
 }
 
-/* format bar graph tooltip2 */
+/* format bar graph tooltip2
 .tooltip{
     position: absolute;
     background-color: grey;
     border: solid;
     padding: 5px;
-}
+} */
 
 .nyCounties:hover{
     fill: orange;
