@@ -56,6 +56,7 @@ BAR_CHART_FRAME.selectAll("bars")
         .data(data)
         .enter().append("rect")
         .attr("class", "bar")
+        .attr("fill", "darkblue")
         .attr("x", (d) => {
             return (xScaleBar(d.year) + MARGINS.left)
         })
