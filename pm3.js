@@ -238,34 +238,42 @@ d3.json("ny_counties.geojson")
 
     });
 
-      /*
-      add color legend
-      Consulted resource for tooltip: http://using-d3js.com/04_08_legends.html
-      */
-let LEGEND = d3.select('.color-legend')
-    .append("svg")
-    .attr("width", FRAME_WIDTH)
-    .attr("height", FRAME_HEIGHT)
-    .attr("id", "legend");
+    /*
+    DS4200
+    PM-04
+    Robert Hoyler, Adelaide Bsharah, Aashvi Shah, Marley Ferguson
+    Add color legend to NYS Map
+    Consulted resource for color legend: http://using-d3js.com/04_08_legends.html
+    */
+
+
+    let LEGEND = d3.select('.color-legend')
+        .append("svg")
+        .attr("width", FRAME_WIDTH)
+        .attr("height", FRAME_HEIGHT)
+        .attr("id", "legend");
 
     let linear = d3.scaleLinear('.color-legend')
-      .domain([0,10])
+      .domain([0,3337])
       .range(["rgb(241, 247, 253)", "rgb(8, 48, 107)"]);
+
+      "rgb(44, 123, 186)"
 
     let svg = d3.select("svg");
 
-        svg.append("g")
+    MAP_FRAME.append("g")
       .attr("class", "color-legend")
-      .attr("transform", "translate(60,40)");
+      .attr("transform", "translate(60,400)");
 
     let legendLinear = d3.legendColor('.color-legend')
-      .shapeWidth(30)
+      .shapeWidth(100)
       .orient('horizontal')
       .scale(linear);
 
-        svg.select(".color-legend")
+    MAP_FRAME.select(".color-legend")
       .call(legendLinear);
 
+HEAD
       d3.select("color-legend").append("MAP_FRAME")
 
   });
