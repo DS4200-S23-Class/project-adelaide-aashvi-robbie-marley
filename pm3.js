@@ -243,7 +243,7 @@ d3.json("ny_counties.geojson")
     PM-04
     Robert Hoyler, Adelaide Bsharah, Aashvi Shah, Marley Ferguson
     Add color legend to NYS Map
-    Consulted resource for tooltip: http://using-d3js.com/04_08_legends.html
+    Consulted resource for color legend: http://using-d3js.com/04_08_legends.html
     */
 
 
@@ -254,17 +254,19 @@ d3.json("ny_counties.geojson")
         .attr("id", "legend");
 
     let linear = d3.scaleLinear('.color-legend')
-      // .domain([0,3337])
+      .domain([0,3337])
       .range(["rgb(241, 247, 253)", "rgb(8, 48, 107)"]);
+
+      "rgb(44, 123, 186)"
 
     let svg = d3.select("svg");
 
     MAP_FRAME.append("g")
       .attr("class", "color-legend")
-      .attr("transform", "translate(60,90)");
+      .attr("transform", "translate(60,400)");
 
     let legendLinear = d3.legendColor('.color-legend')
-      .shapeWidth(30)
+      .shapeWidth(100)
       .orient('horizontal')
       .scale(linear);
 
