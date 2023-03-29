@@ -246,20 +246,9 @@ d3.json("ny_counties.geojson")
     Consulted resource for color legend: http://using-d3js.com/04_08_legends.html
     */
 
-
-    let LEGEND = d3.select('.color-legend')
-        .append("svg")
-        .attr("width", FRAME_WIDTH)
-        .attr("height", FRAME_HEIGHT)
-        .attr("id", "legend");
-
     let linear = d3.scaleLinear('.color-legend')
       .domain([0,3337])
       .range(["rgb(241, 247, 253)", "rgb(8, 48, 107)"]);
-
-      "rgb(44, 123, 186)"
-
-    let svg = d3.select("svg");
 
     MAP_FRAME.append("g")
       .attr("class", "color-legend")
@@ -267,13 +256,12 @@ d3.json("ny_counties.geojson")
 
     let legendLinear = d3.legendColor('.color-legend')
       .shapeWidth(100)
+      .title("Legend: Total Deaths")
       .orient('horizontal')
       .scale(linear);
 
     MAP_FRAME.select(".color-legend")
       .call(legendLinear);
-
-    d3.select("color-legend").append("svg")
 
   });
 
