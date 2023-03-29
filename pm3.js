@@ -119,6 +119,7 @@ Robert Hoyler, Adelaide Bsharah, Aashvi Shah, Marley Ferguson
 Consulted resource for creating map from JSON data using d3: https://observablehq.com/@mprasse/week-11-intro-to-d3-js-mapping-data-with-d3
 */
 
+
 // Map of New York State w/ Counties
 
 let MAP_FRAME = d3.select('.nys-map')
@@ -188,6 +189,7 @@ d3.json("ny_counties.geojson")
             .style("border", "solid")
             .style("padding", "5px");
 
+
     // append new map to frame
     let g = MAP_FRAME.append("g");
 
@@ -202,7 +204,7 @@ d3.json("ny_counties.geojson")
         return countiesColors[d.properties.NAME];
       })
       .attr("stroke", "white")
-      .attr("county", function(d) {return d.properties.NAME})
+      .attr("county", function(d) {return d.properties.NAME}) 
 
       /*
        DS4200
@@ -232,9 +234,34 @@ d3.json("ny_counties.geojson")
         .style("top", (event.pageY - 50) + "px")
         .text("County: " + d.properties.NAME + " || Total Deaths: " + countiesDeath[d.properties.NAME]); // return name of the county
       })
+
+
     });
 
+    /*
+    DS4200
+    PM-04
+    Robert Hoyler, Adelaide Bsharah, Aashvi Shah, Marley Ferguson
+    Add color legend to NYS Map
+    Consulted resource for color legend: http://using-d3js.com/04_08_legends.html
+    */
 
+    let linear = d3.scaleLinear('.color-legend')
+      .domain([0,3337])
+      .range(["rgb(241, 247, 253)", "rgb(8, 48, 107)"]);
+
+    MAP_FRAME.append("g")
+      .attr("class", "color-legend")
+      .attr("transform", "translate(60,400)");
+
+    let legendLinear = d3.legendColor('.color-legend')
+      .shapeWidth(100)
+      .title("Legend: Total Deaths")
+      .orient('horizontal')
+      .scale(linear);
+
+    MAP_FRAME.select(".color-legend")
+      .call(legendLinear);
 
   });
 
