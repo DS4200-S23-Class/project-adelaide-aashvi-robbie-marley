@@ -266,7 +266,7 @@ let LEGEND = d3.select('.color-legend')
         svg.select(".color-legend")
       .call(legendLinear);
 
-      d3.select("color-legend").append("svg")
+      d3.select("color-legend").append("MAP_FRAME")
 
   });
 
