@@ -207,5 +207,42 @@ d3.json("ny_counties.geojson")
 
 
 
+  var width = 400,
+  var height = 200;
+
+// Create a D3 scale for the gradient colors
+var colorScale = d3.scaleLinear()
+    .domain([0, 1])
+    .range(["#e6f7ff", "#0066cc"]);
+
+// Create a rectangle with a gradient fill
+var gradientRect = d3.select("#gradient-rect")
+    .attr("width", width)
+    .attr("height", height)
+  .append("rect")
+    .attr("width", width)
+    .attr("height", height)
+    .style("fill", "url(#gradient)");
+
+// Add the gradient definition to the SVG element
+var gradient = d3.select("#gradient-rect")
+  .append("defs")
+    .append("linearGradient")
+      .attr("id", "gradient")
+      .attr("x1", "0%")
+      .attr("y1", "0%")
+      .attr("x2", "0%")
+      .attr("y2", "100%");
+
+// Add the gradient colors to the gradient definition
+gradient.append("stop")
+    .attr("offset", "0%")
+    .attr("stop-color", colorScale(0));
+gradient.append("stop")
+    .attr("offset", "100%")
+    .attr("stop-color", colorScale(1));
+
+
+
 
 
