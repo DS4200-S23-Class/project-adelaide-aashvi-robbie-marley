@@ -62,17 +62,27 @@ d3.csv("countiesData.csv").then((fulldata) => {
         .call(d3.axisBottom(xScaleBar).ticks(10))
         .attr("font-size", "11px");
 
+
   dropdown.addEventListener("change", function(){
     // console.log(this.value)
+    // d3.select("bars").remove()
     updateBarChart(this.value, fulldata)
   })
 
+
   function updateBarChart(county, fulldata){
+
     // selected county from event listener
     let selectedCounty = fulldata.filter(function(d){
       return d.county == county;
     })
-    // console.log(selectedCounty);
+    //console.log(selectedCounty);
+
+    // let bar_data = [];
+
+    // for(let i = 0; i < selectedCounty.length; i++){
+
+    // }
 
     /*
     DS4200
@@ -86,25 +96,100 @@ d3.csv("countiesData.csv").then((fulldata) => {
       return d.year;
     })
     
-    //console.log(yearGroup)
+    // console.log(yearGroup)
 
     // create array that stores year and number of deaths for selected county
     let deathsByYear = Array.from(yearGroup, function([key, value]) {
       return {
-          year: key,
+         year: key,
           deaths: d3.sum(value, function(d) { return +d.deaths; })
       }});
-    
-     //console.log(deathsByYear)
+    //console.log(deathsByYear[0].deaths)
 
-    // create lists of years and deaths
-    let yearsDeaths = {};
-    deathsByYear.forEach(function(d){
-      yearsDeaths[d.year] = d.deaths;
-    })
-    console.log(yearsDeaths)
+    const yScaleBar = d3.scaleLinear().range([BAR_HEIGHT, 0]);
 
-  }
+    let deathNumbers = []
+    // create list of deaths for the county
+    for(let i = 0; i < deathsByYear.length; i++){
+      //console.log(deathsByYear[i].deaths)
+      deathNumbers.push(deathsByYear[i].deaths)
+    }
+    // console.log(deathNumbers);
+
+    maxValDeaths = d3.max(deathNumbers)
+    //console.log(maxValDeaths)
+
+    // create y-scale function
+    yScaleBar.domain([0, d3.max(deathNumbers)]);
+
+    console.log(listOfYears)
+    console.log(deathNumbers)
+
+    BAR_CHART_FRAME.selectAll("rect").remove();
+    BAR_CHART_FRAME.selectAll("g").remove();
+
+    // create bar chart
+    BAR_CHART_FRAME.selectAll("bars")
+      .data(deathsByYear)
+      .enter().append("rect")
+      .attr("class", "bar")
+      .attr("fill", "rgb(44, 123, 186)")
+      .attr("x", (d) => {
+            return (MARGINS.left + xScaleBar(d.year))
+      })
+      .attr("y", (d) => {
+            return (yScaleBar(d.deaths) + MARGINS.left)
+      })
+      .attr("width", xScaleBar.bandwidth())
+      .attr("height", (d) => {
+          return BAR_HEIGHT - yScaleBar(d.deaths)
+      });
+
+      // create x-axis
+        BAR_CHART_FRAME.append("g")
+        .attr("transform", "translate(" + MARGINS.top + "," +
+            (BAR_HEIGHT + MARGINS.top) + ")")
+        .call(d3.axisBottom(xScaleBar).ticks(10))
+        .attr("font-size", "11px");
+
+    // create y-axis
+    BAR_CHART_FRAME.append("g")
+    .attr("transform", "translate(" +
+      (MARGINS.left) + "," + (MARGINS.top) + ")")
+    .call(d3.axisLeft(yScaleBar).ticks(10))
+    .attr("font-size", "11px");
+
+    // create tooltip for the bar-chart
+    const TOOLTIP2 = d3.select(".bar-chart")
+    .append("div")
+    .attr("class", "tooltip2")
+    .style("opacity", 0);
+
+    // mouse over
+    function handleMouseOver(event, d){
+    TOOLTIP2.style("opacity", 1);
+    };
+
+    // mouse move
+    function handleMouseMove(event, d){
+    TOOLTIP2.html("Year: " + d.year + "<br>Death Count: " + d.deaths)
+        .style("left", (event.pageX + 10) + "px")
+        .style("top", (event.pageY - 50) + "px");
+    };
+
+  // mouse leave
+  function handleMouseLeave(event, d){
+  TOOLTIP2.style("opacity", 0);
+  };
+
+  // add event listeners
+  BAR_CHART_FRAME.selectAll(".bar")
+    .on("mouseover", handleMouseOver)
+    .on("mousemove", handleMouseMove)
+    .on("mouseleave", handleMouseLeave);
+
+
+}
 
 
 });
