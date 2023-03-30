@@ -24,6 +24,7 @@ const BAR_HEIGHT = FRAME_HEIGHT - MARGINS.top - MARGINS.bottom;
 const BAR_WIDTH = FRAME_WIDTH - MARGINS.left - MARGINS.right;
 
 d3.csv("countiesData.csv").then((fulldata) => {
+  
   // create set of list of counties
   const listOfCounties = new Set();
   fulldata.forEach(function(d){
@@ -53,10 +54,18 @@ d3.csv("countiesData.csv").then((fulldata) => {
     })
     // console.log(selectedCounty);
 
+    /*
+    DS4200
+    PM-05
+    Robert Hoyler, Adelaide Bsharah, Aashvi Shah, Marley Ferguson
+    Consulted resource for d3.group and Array.from: https://github.com/d3/d3-array
+    */
+
     // group all items in selectedCounty by year
     let yearGroup = d3.group(selectedCounty, function(d){
       return d.year;
     })
+    
     //console.log(yearGroup)
 
     // create array that stores year and number of deaths for selected county
