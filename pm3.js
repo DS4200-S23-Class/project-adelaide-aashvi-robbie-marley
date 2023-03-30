@@ -4,6 +4,7 @@ let FRAME_WIDTH = 600;
 let MARGINS = {left: 50, right: 50, top: 50, bottom: 50};
 
 
+
 /*
 DS4200
 PM-03
@@ -22,8 +23,53 @@ let BAR_CHART_FRAME = d3.select('.bar-chart')
 const BAR_HEIGHT = FRAME_HEIGHT - MARGINS.top - MARGINS.bottom;
 const BAR_WIDTH = FRAME_WIDTH - MARGINS.left - MARGINS.right;
 
-d3.csv("countiesData.csv").then((data) => {
-  console.log(data)
+d3.csv("countiesData.csv").then((fulldata) => {
+  // create set of list of counties
+  const listOfCounties = new Set();
+  fulldata.forEach(function(d){
+    listOfCounties.add(d.county)
+  })
+
+  // get dropdown menu from HTML
+  let dropdown = document.getElementById("dropdownMenu")
+  
+  // create option for all counties in dropdown menu
+  listOfCounties.forEach(function(county) {
+    let countyOption = document.createElement("option")
+    countyOption.text = county
+    dropdown.add(countyOption);
+  });
+
+  dropdown.addEventListener("change", function(){
+    // console.log(this.value)
+    updateBarChart(this.value, fulldata)
+  })
+
+
+  function updateBarChart(county, fulldata){
+    // selected county from event listener
+    let selectedCounty = fulldata.filter(function(d){
+      return d.county == county;
+    })
+    // console.log(selectedCounty);
+
+    // group all items in selectedCounty by year
+    let yearGroup = d3.group(selectedCounty, function(d){
+      return d.year;
+    })
+    //console.log(yearGroup)
+
+    // create array that stores year and number of deaths for selected county
+    let deathsByYear = Array.from(yearGroup, function([key, value]) {
+      return {
+          year: key,
+          deaths: d3.sum(value, function(d) { return +d.deaths; })
+      }});
+    
+     console.log(deathsByYear)
+
+  }
+
 });
 
 // read in bar chart data
@@ -156,11 +202,11 @@ d3.json("ny_counties.geojson")
       // create dictionary for colors
       let countiesColors = {};
       csvdata.forEach(function(d){
-        console.log(d.county)
+        // console.log(d.county)
         countiesColors[d.county] = (d3.interpolateBlues(colorScale(d.deaths / maxVal)));
         // console.log(colorScale(d.deaths / maxVal))
       });
-      console.log(countiesColors)
+      //console.log(countiesColors)
 
       // create dictionary for deaths
       let countiesDeath = {};
