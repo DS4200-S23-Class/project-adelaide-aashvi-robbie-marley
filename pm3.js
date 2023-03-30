@@ -29,23 +29,43 @@ d3.csv("countiesData.csv").then((fulldata) => {
   const listOfCounties = new Set();
   fulldata.forEach(function(d){
     listOfCounties.add(d.county)
-  })
-
-  // get dropdown menu from HTML
-  let dropdown = document.getElementById("dropdownMenu")
-  
-  // create option for all counties in dropdown menu
-  listOfCounties.forEach(function(county) {
-    let countyOption = document.createElement("option")
-    countyOption.text = county
-    dropdown.add(countyOption);
   });
+
+  // create set of years
+  const listOfYears = new Set();
+  fulldata.forEach(function(d){
+    listOfYears.add(d.year);
+  });
+
+    // add the options to the button (reference)
+    d3.select("#dropdownMenu")
+      .selectAll('myOptions')
+     	.data(listOfCounties)
+      .enter()
+    	.append('option')
+      .text(function (d) { return d; }) // text showed in the menu
+      .attr("value", function (d) { return d; }) // corresponding value returned by the button
+
+  // // get dropdown menu from HTML
+  let dropdown = document.getElementById("dropdownMenu")
+
+  // x-axis scaling function
+  const xScaleBar = d3.scaleBand().range([0, BAR_WIDTH]).padding(0.3);
+
+  // x-axis domaon
+  xScaleBar.domain(listOfYears);
+
+  // create x-axis
+        BAR_CHART_FRAME.append("g")
+        .attr("transform", "translate(" + MARGINS.top + "," +
+            (BAR_HEIGHT + MARGINS.top) + ")")
+        .call(d3.axisBottom(xScaleBar).ticks(10))
+        .attr("font-size", "11px");
 
   dropdown.addEventListener("change", function(){
     // console.log(this.value)
     updateBarChart(this.value, fulldata)
   })
-
 
   function updateBarChart(county, fulldata){
     // selected county from event listener
@@ -83,116 +103,97 @@ d3.csv("countiesData.csv").then((fulldata) => {
       yearsDeaths[d.year] = d.deaths;
     })
     console.log(yearsDeaths)
+
   }
 
-  // create scaling functuons
-  const xScaleBar = d3.scaleBand().range([0, BAR_WIDTH]).padding(0.3);
-  const yScaleBar = d3.scaleLinear().range([BAR_HEIGHT, 0]);
-
-  // max values for x-axis
-  xScaleBar.domain(data.map((d) => {
-    return d.year
-  }));
-
-  const deathValues = [];
-  data.map((d) => {
-    deathValues.push(parseInt(d.deaths))
-  });
-
-  // max values for y-axis
-  yScaleBar.domain([0, d3.max(deathValues)]);
-
-
-
-
 
 });
 
-// read in bar chart data
-d3.csv("albanyData.csv").then((data) => {
+// // read in bar chart data
+// d3.csv("albanyData.csv").then((data) => {
 
-  // create scaling functuons
-  const xScaleBar = d3.scaleBand().range([0, BAR_WIDTH]).padding(0.3);
-  const yScaleBar = d3.scaleLinear().range([BAR_HEIGHT, 0]);
+//   // create scaling functuons
+//   const xScaleBar = d3.scaleBand().range([0, BAR_WIDTH]).padding(0.3);
+//   const yScaleBar = d3.scaleLinear().range([BAR_HEIGHT, 0]);
 
-  // max values for x-axis
-  xScaleBar.domain(data.map((d) => {
-    return d.year
-  }));
-
-
-  const deathValues = [];
-  data.map((d) => {
-    deathValues.push(parseInt(d.deaths))
-  });
-  // console.log(deathValues)
-  // console.log(d3.max(deathValues))
+//   // max values for x-axis
+//   xScaleBar.domain(data.map((d) => {
+//     return d.year
+//   }));
 
 
-  // max values for y-axis
-  yScaleBar.domain([0, d3.max(deathValues)]);
+//   const deathValues = [];
+//   data.map((d) => {
+//     deathValues.push(parseInt(d.deaths))
+//   });
+//   // console.log(deathValues)
+//   // console.log(d3.max(deathValues))
 
-// create bar chart
-BAR_CHART_FRAME.selectAll("bars")
-        .data(data)
-        .enter().append("rect")
-        .attr("class", "bar")
-        .attr("fill", "rgb(44, 123, 186)")
-        .attr("x", (d) => {
-            return (xScaleBar(d.year) + MARGINS.left)
-        })
-        .attr("y", (d) => {
-            return (MARGINS.left + yScaleBar(d.deaths))
-        })
-        .attr("width", xScaleBar.bandwidth())
-        .attr("height", (d) => {
-            return BAR_HEIGHT - yScaleBar(d.deaths)
-        });
 
-        // create x-axis
-        BAR_CHART_FRAME.append("g")
-        .attr("transform", "translate(" + MARGINS.top + "," +
-            (BAR_HEIGHT + MARGINS.top) + ")")
-        .call(d3.axisBottom(xScaleBar).ticks(10))
-        .attr("font-size", "11px");
+//   // max values for y-axis
+//   yScaleBar.domain([0, d3.max(deathValues)]);
 
-        // create y-axis
-        BAR_CHART_FRAME.append("g")
-        .attr("transform", "translate(" +
-            (MARGINS.left) + "," + (MARGINS.top) + ")")
-        .call(d3.axisLeft(yScaleBar).ticks(10))
-        .attr("font-size", "11px");
+// // create bar chart
+// BAR_CHART_FRAME.selectAll("bars")
+//         .data(data)
+//         .enter().append("rect")
+//         .attr("class", "bar")
+//         .attr("fill", "rgb(44, 123, 186)")
+//         .attr("x", (d) => {
+//             return (xScaleBar(d.year) + MARGINS.left)
+//         })
+//         .attr("y", (d) => {
+//             return (MARGINS.left + yScaleBar(d.deaths))
+//         })
+//         .attr("width", xScaleBar.bandwidth())
+//         .attr("height", (d) => {
+//             return BAR_HEIGHT - yScaleBar(d.deaths)
+//         });
 
-    // create tooltip for the bar-chart
-    const TOOLTIP2 = d3.select(".bar-chart")
-        .append("div")
-        .attr("class", "tooltip2")
-        .style("opacity", 0);
+//         // create x-axis
+//         BAR_CHART_FRAME.append("g")
+//         .attr("transform", "translate(" + MARGINS.top + "," +
+//             (BAR_HEIGHT + MARGINS.top) + ")")
+//         .call(d3.axisBottom(xScaleBar).ticks(10))
+//         .attr("font-size", "11px");
 
-    // mouse over
-    function handleMouseOver(event, d){
-        TOOLTIP2.style("opacity", 1);
-    };
+//         // create y-axis
+//         BAR_CHART_FRAME.append("g")
+//         .attr("transform", "translate(" +
+//             (MARGINS.left) + "," + (MARGINS.top) + ")")
+//         .call(d3.axisLeft(yScaleBar).ticks(10))
+//         .attr("font-size", "11px");
 
-    // mouse move
-    function handleMouseMove(event, d){
-        TOOLTIP2.html("Year: " + d.year + "<br>Death Count: " + d.deaths)
-            .style("left", (event.pageX + 10) + "px")
-            .style("top", (event.pageY - 50) + "px");
-    };
+//     // create tooltip for the bar-chart
+//     const TOOLTIP2 = d3.select(".bar-chart")
+//         .append("div")
+//         .attr("class", "tooltip2")
+//         .style("opacity", 0);
 
-    // mouse leave
-    function handleMouseLeave(event, d){
-        TOOLTIP2.style("opacity", 0);
-    };
+//     // mouse over
+//     function handleMouseOver(event, d){
+//         TOOLTIP2.style("opacity", 1);
+//     };
 
-    // add event listeners
-    BAR_CHART_FRAME.selectAll(".bar")
-        .on("mouseover", handleMouseOver)
-        .on("mousemove", handleMouseMove)
-        .on("mouseleave", handleMouseLeave);
+//     // mouse move
+//     function handleMouseMove(event, d){
+//         TOOLTIP2.html("Year: " + d.year + "<br>Death Count: " + d.deaths)
+//             .style("left", (event.pageX + 10) + "px")
+//             .style("top", (event.pageY - 50) + "px");
+//     };
 
-});
+//     // mouse leave
+//     function handleMouseLeave(event, d){
+//         TOOLTIP2.style("opacity", 0);
+//     };
+
+//     // add event listeners
+//     BAR_CHART_FRAME.selectAll(".bar")
+//         .on("mouseover", handleMouseOver)
+//         .on("mousemove", handleMouseMove)
+//         .on("mouseleave", handleMouseLeave);
+
+// });
 
 /*
 DS4200
