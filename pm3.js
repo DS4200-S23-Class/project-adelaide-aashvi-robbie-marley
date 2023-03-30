@@ -75,9 +75,36 @@ d3.csv("countiesData.csv").then((fulldata) => {
           deaths: d3.sum(value, function(d) { return +d.deaths; })
       }});
     
-     console.log(deathsByYear)
+     //console.log(deathsByYear)
 
+    // create lists of years and deaths
+    let yearsDeaths = {};
+    deathsByYear.forEach(function(d){
+      yearsDeaths[d.year] = d.deaths;
+    })
+    console.log(yearsDeaths)
   }
+
+  // create scaling functuons
+  const xScaleBar = d3.scaleBand().range([0, BAR_WIDTH]).padding(0.3);
+  const yScaleBar = d3.scaleLinear().range([BAR_HEIGHT, 0]);
+
+  // max values for x-axis
+  xScaleBar.domain(data.map((d) => {
+    return d.year
+  }));
+
+  const deathValues = [];
+  data.map((d) => {
+    deathValues.push(parseInt(d.deaths))
+  });
+
+  // max values for y-axis
+  yScaleBar.domain([0, d3.max(deathValues)]);
+
+
+
+
 
 });
 
