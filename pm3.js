@@ -69,9 +69,10 @@ d3.csv("countiesData.csv").then((fulldata) => {
     updateBarChart(this.value, fulldata)
   })
 
+  updateBarChart("Albany", fulldata);
+
 
   function updateBarChart(county, fulldata){
-
     // selected county from event listener
     let selectedCounty = fulldata.filter(function(d){
       return d.county == county;
