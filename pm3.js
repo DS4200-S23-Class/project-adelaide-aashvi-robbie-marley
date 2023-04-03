@@ -4,6 +4,11 @@ let FRAME_WIDTH = 600;
 let MARGINS = {left: 50, right: 50, top: 50, bottom: 50};
 
 
+<<<<<<< Updated upstream
+=======
+let dropdown = document.getElementById("dropdownMenu")
+dropdown.selectedIndex =1;
+>>>>>>> Stashed changes
 
 /*
 DS4200
@@ -69,7 +74,11 @@ d3.csv("countiesData.csv").then((fulldata) => {
     updateBarChart(this.value, fulldata)
   })
 
+<<<<<<< Updated upstream
   updateBarChart("Albany", fulldata);
+=======
+    updateBarChart("Albany", fulldata);
+>>>>>>> Stashed changes
 
 
   function updateBarChart(county, fulldata){
@@ -123,8 +132,8 @@ d3.csv("countiesData.csv").then((fulldata) => {
     // create y-scale function
     yScaleBar.domain([0, d3.max(deathNumbers)]);
 
-    console.log(listOfYears)
-    console.log(deathNumbers)
+    // console.log(listOfYears)
+    // console.log(deathNumbers)
 
     BAR_CHART_FRAME.selectAll("rect").remove();
     BAR_CHART_FRAME.selectAll("g").remove();
@@ -188,8 +197,6 @@ d3.csv("countiesData.csv").then((fulldata) => {
     .on("mouseover", handleMouseOver)
     .on("mousemove", handleMouseMove)
     .on("mouseleave", handleMouseLeave);
-
-
 }
 
 
@@ -297,6 +304,12 @@ let MAP_FRAME = d3.select('.nys-map')
 .attr("height", FRAME_HEIGHT)
 .attr("id", "map");
 
+<<<<<<< Updated upstream
+=======
+// draw_map();
+
+
+>>>>>>> Stashed changes
 // read in json file 
 d3.json("ny_counties.geojson")
   .then(function(data) {
@@ -331,6 +344,8 @@ d3.json("ny_counties.geojson")
       });
       //console.log(countiesColors)
 
+      
+
       // create dictionary for deaths
       let countiesDeath = {};
       csvdata.forEach(function(d){
@@ -362,6 +377,21 @@ d3.json("ny_counties.geojson")
     // append new map to frame
     let g = MAP_FRAME.append("g");
 
+<<<<<<< Updated upstream
+=======
+
+/*
+     dropdown.addEventListener("change", function(){
+    // console.log(this.value)
+    // d3.select("bars").remove()
+    updateBarChart(this.value, fulldata)
+    })
+*/
+
+function draw_map(countiesColorsNew) {
+
+  console.log(countiesColorsNew)
+>>>>>>> Stashed changes
     // add all "paths" (NYS Counties) to the object (attached to frame)
     g.selectAll("path")
       .data(nyCounties)
@@ -370,7 +400,8 @@ d3.json("ny_counties.geojson")
       .attr("d", path)
       .attr("fill", 
       function(d){
-        return countiesColors[d.properties.NAME];
+        console.log(countiesColorsNew[d.properties.NAME])
+        return countiesColorsNew[d.properties.NAME];
       })
       .attr("stroke", "white")
       .attr("county", function(d) {return d.properties.NAME}) 
@@ -393,7 +424,7 @@ d3.json("ny_counties.geojson")
       .on("mouseout", function() { 
         d3.select(this)
           .attr("fill", function(d){
-            return countiesColors[d.properties.NAME];
+            return countiesColorsNew[d.properties.NAME];
           }); // path (county) will revert back to map color
         d3.select("#tooltip").style("opacity", "0");
       })
@@ -404,7 +435,28 @@ d3.json("ny_counties.geojson")
         .text("County: " + d.properties.NAME + " || Total Deaths: " + countiesDeath[d.properties.NAME]); // return name of the county
       })
 
+      dropdown.addEventListener("change", function(){
+        //console.log("grPH", this.value);
+        let selectedCounty = d3.select(this).property("value");
+        let originalColor = countiesColors[selectedCounty];
+        countiesColors[selectedCounty] = "hotpink";
+        //console.log("grPH", countiesColors[selectedCounty]);
+        d3.select(this)
+          .attr("fill", function(d){
+            return countiesColorsNew[selectedCounty];
+          }); 
+        // console.log("draw map")
+     })
 
+<<<<<<< Updated upstream
+=======
+    }
+  
+
+    
+    draw_map(countiesColors);
+
+>>>>>>> Stashed changes
     });
 
     /*
@@ -434,7 +486,9 @@ d3.json("ny_counties.geojson")
 
   });
 
+<<<<<<< Updated upstream
+=======
 
+>>>>>>> Stashed changes
 
-  
 
