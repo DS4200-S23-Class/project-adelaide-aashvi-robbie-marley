@@ -52,7 +52,7 @@ d3.csv("countiesData.csv").then((fulldata) => {
   // x-axis scaling function
   const xScaleBar = d3.scaleBand().range([0, BAR_WIDTH]).padding(0.3);
 
-  // x-axis domaon
+  // x-axis domain
   xScaleBar.domain(listOfYears);
 
   // create x-axis
@@ -63,13 +63,7 @@ d3.csv("countiesData.csv").then((fulldata) => {
         .attr("font-size", "11px");
 
 
-  dropdown.addEventListener("change", function(){
-    // console.log(this.value)
-    // d3.select("bars").remove()
-    updateBarChart(this.value, fulldata)
-  })
-
-  updateBarChart("Albany", fulldata);
+     updateBarChart("Albany", fulldata);
 
 
   function updateBarChart(county, fulldata){
@@ -84,6 +78,8 @@ d3.csv("countiesData.csv").then((fulldata) => {
     // for(let i = 0; i < selectedCounty.length; i++){
 
     // }
+
+
 
     /*
     DS4200
@@ -336,6 +332,8 @@ d3.json("ny_counties.geojson")
       csvdata.forEach(function(d){
         countiesDeath[d.county] = d.deaths;
       });
+
+
       
     // create projection and set location on webpage
     let projection = d3.geoAlbers()
@@ -405,6 +403,29 @@ d3.json("ny_counties.geojson")
       })
 
 
+    let dropdown = document.getElementById("dropdownMenu")
+
+/*
+     dropdown.addEventListener("change", function(){
+    // console.log(this.value)
+    // d3.select("bars").remove()
+    updateBarChart(this.value, fulldata)
+    })
+*/
+
+     dropdown.addEventListener("change", function(){
+        console.log("grPH", this.value);
+        let selectedCounty = d3.select(this).property("value");
+        updateBarChart(selectedCounty, fulldata)
+        countiesColors[selectedCounty] = "pink";
+        console.log("grPH", "yellow");
+    })
+
+
+    
+
+
+
     });
 
     /*
@@ -432,7 +453,12 @@ d3.json("ny_counties.geojson")
     MAP_FRAME.select(".color-legend")
       .call(legendLinear);
 
+
+    
   });
+
+
+   
 
 
 
