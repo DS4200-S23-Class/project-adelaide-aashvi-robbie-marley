@@ -27,7 +27,7 @@ let BAR_CHART_FRAME = d3.select('.bar-chart')
 const BAR_HEIGHT = FRAME_HEIGHT - MARGINS.top - MARGINS.bottom;
 const BAR_WIDTH = FRAME_WIDTH - MARGINS.left - MARGINS.right;
 
-d3.csv("countiesData.csv").then((fulldata) => {
+d3.csv("NEWupdatedcountiesData.csv").then((fulldata) => {
   
   // create set of list of counties
   const listOfCounties = new Set();
@@ -196,95 +196,8 @@ dropdown.addEventListener("change", function(){
 
 
 }
-
-
 });
 
-// // read in bar chart data
-// d3.csv("albanyData.csv").then((data) => {
-
-//   // create scaling functuons
-//   const xScaleBar = d3.scaleBand().range([0, BAR_WIDTH]).padding(0.3);
-//   const yScaleBar = d3.scaleLinear().range([BAR_HEIGHT, 0]);
-
-//   // max values for x-axis
-//   xScaleBar.domain(data.map((d) => {
-//     return d.year
-//   }));
-
-
-//   const deathValues = [];
-//   data.map((d) => {
-//     deathValues.push(parseInt(d.deaths))
-//   });
-//   // console.log(deathValues)
-//   // console.log(d3.max(deathValues))
-
-
-//   // max values for y-axis
-//   yScaleBar.domain([0, d3.max(deathValues)]);
-
-// // create bar chart
-// BAR_CHART_FRAME.selectAll("bars")
-//         .data(data)
-//         .enter().append("rect")
-//         .attr("class", "bar")
-//         .attr("fill", "rgb(44, 123, 186)")
-//         .attr("x", (d) => {
-//             return (xScaleBar(d.year) + MARGINS.left)
-//         })
-//         .attr("y", (d) => {
-//             return (MARGINS.left + yScaleBar(d.deaths))
-//         })
-//         .attr("width", xScaleBar.bandwidth())
-//         .attr("height", (d) => {
-//             return BAR_HEIGHT - yScaleBar(d.deaths)
-//         });
-
-//         // create x-axis
-//         BAR_CHART_FRAME.append("g")
-//         .attr("transform", "translate(" + MARGINS.top + "," +
-//             (BAR_HEIGHT + MARGINS.top) + ")")
-//         .call(d3.axisBottom(xScaleBar).ticks(10))
-//         .attr("font-size", "11px");
-
-//         // create y-axis
-//         BAR_CHART_FRAME.append("g")
-//         .attr("transform", "translate(" +
-//             (MARGINS.left) + "," + (MARGINS.top) + ")")
-//         .call(d3.axisLeft(yScaleBar).ticks(10))
-//         .attr("font-size", "11px");
-
-//     // create tooltip for the bar-chart
-//     const TOOLTIP2 = d3.select(".bar-chart")
-//         .append("div")
-//         .attr("class", "tooltip2")
-//         .style("opacity", 0);
-
-//     // mouse over
-//     function handleMouseOver(event, d){
-//         TOOLTIP2.style("opacity", 1);
-//     };
-
-//     // mouse move
-//     function handleMouseMove(event, d){
-//         TOOLTIP2.html("Year: " + d.year + "<br>Death Count: " + d.deaths)
-//             .style("left", (event.pageX + 10) + "px")
-//             .style("top", (event.pageY - 50) + "px");
-//     };
-
-//     // mouse leave
-//     function handleMouseLeave(event, d){
-//         TOOLTIP2.style("opacity", 0);
-//     };
-
-//     // add event listeners
-//     BAR_CHART_FRAME.selectAll(".bar")
-//         .on("mouseover", handleMouseOver)
-//         .on("mousemove", handleMouseMove)
-//         .on("mouseleave", handleMouseLeave);
-
-// });
 
 /*
 DS4200
@@ -304,8 +217,7 @@ let MAP_FRAME = d3.select('.nys-map')
 
 draw_map();
 
-function draw_map(county) {
-
+function draw_map() {
 // read in json file 
 d3.json("ny_counties.geojson")
   .then(function(data) {
@@ -381,7 +293,6 @@ d3.json("ny_counties.geojson")
     updateBarChart(this.value, fulldata)
     })
 */
-
      dropdown.addEventListener("change", function(){
         console.log("grPH", this.value);
         let selectedCounty = d3.select(this).property("value");
@@ -460,21 +371,19 @@ d3.json("ny_counties.geojson")
 
     let legendLinear = d3.legendColor('.color-legend')
       .shapeWidth(100)
-      .title("Legend: Total Deaths")
+      .title("Legend: Total Deaths (2003-2019)")
       .orient('horizontal')
       .scale(linear);
 
     MAP_FRAME.select(".color-legend")
       .call(legendLinear);
 
-
-    
   });
 
 }
 
 
-draw_map()
+// draw_map()
 
    
 

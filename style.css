@@ -1,5 +1,6 @@
 body {
     font-family: Arial;
+
 }
 
 h1 {
@@ -36,4 +37,9 @@ h1 {
 
 .nyCounties:hover{
     fill: orange;
+}
+
+#viz {
+    display: flex;
+    flex-direction: row;
 }
