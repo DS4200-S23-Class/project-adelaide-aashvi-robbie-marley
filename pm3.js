@@ -4,6 +4,10 @@ let FRAME_WIDTH = 600;
 let MARGINS = {left: 50, right: 50, top: 50, bottom: 50};
 
 
+let dropdown = document.getElementById("dropdownMenu")
+dropdown.selectedIndex =1;
+
+
 
 /*
 DS4200
@@ -47,7 +51,7 @@ d3.csv("countiesData.csv").then((fulldata) => {
       .attr("value", function (d) { return d; }) // corresponding value returned by the button
 
   // // get dropdown menu from HTML
-  let dropdown = document.getElementById("dropdownMenu")
+  //let dropdown = document.getElementById("dropdownMenu")
 
   // x-axis scaling function
   const xScaleBar = d3.scaleBand().range([0, BAR_WIDTH]).padding(0.3);
@@ -62,6 +66,11 @@ d3.csv("countiesData.csv").then((fulldata) => {
         .call(d3.axisBottom(xScaleBar).ticks(10))
         .attr("font-size", "11px");
 
+dropdown.addEventListener("change", function(){
+    // console.log(this.value)
+    // d3.select("bars").remove()
+    updateBarChart(this.value, fulldata)
+    })
 
      updateBarChart("Albany", fulldata);
 
@@ -293,6 +302,10 @@ let MAP_FRAME = d3.select('.nys-map')
 .attr("height", FRAME_HEIGHT)
 .attr("id", "map");
 
+draw_map();
+
+function draw_map(county) {
+
 // read in json file 
 d3.json("ny_counties.geojson")
   .then(function(data) {
@@ -360,6 +373,24 @@ d3.json("ny_counties.geojson")
     // append new map to frame
     let g = MAP_FRAME.append("g");
 
+
+/*
+     dropdown.addEventListener("change", function(){
+    // console.log(this.value)
+    // d3.select("bars").remove()
+    updateBarChart(this.value, fulldata)
+    })
+*/
+
+     dropdown.addEventListener("change", function(){
+        console.log("grPH", this.value);
+        let selectedCounty = d3.select(this).property("value");
+        let originalColor = countiesColors[selectedCounty];
+        countiesColors[selectedCounty] = "hotpink";
+        console.log("grPH", "yellow");
+        draw_map();
+        console.log("draw map")
+
     // add all "paths" (NYS Counties) to the object (attached to frame)
     g.selectAll("path")
       .data(nyCounties)
@@ -403,30 +434,13 @@ d3.json("ny_counties.geojson")
       })
 
 
-    let dropdown = document.getElementById("dropdownMenu")
 
-/*
-     dropdown.addEventListener("change", function(){
-    // console.log(this.value)
-    // d3.select("bars").remove()
-    updateBarChart(this.value, fulldata)
     })
-*/
-
-     dropdown.addEventListener("change", function(){
-        console.log("grPH", this.value);
-        let selectedCounty = d3.select(this).property("value");
-        updateBarChart(selectedCounty, fulldata)
-        countiesColors[selectedCounty] = "pink";
-        console.log("grPH", "yellow");
-    })
-
 
     
-
-
-
     });
+
+    
 
     /*
     DS4200
@@ -457,6 +471,10 @@ d3.json("ny_counties.geojson")
     
   });
 
+}
+
+
+draw_map()
 
    
 
