@@ -4,6 +4,10 @@ let FRAME_WIDTH = 600;
 let MARGINS = {left: 50, right: 50, top: 50, bottom: 50};
 
 
+let dropdown = document.getElementById("dropdownMenu")
+dropdown.selectedIndex =1;
+
+
 
 /*
 DS4200
@@ -23,7 +27,7 @@ let BAR_CHART_FRAME = d3.select('.bar-chart')
 const BAR_HEIGHT = FRAME_HEIGHT - MARGINS.top - MARGINS.bottom;
 const BAR_WIDTH = FRAME_WIDTH - MARGINS.left - MARGINS.right;
 
-d3.csv("countiesData.csv").then((fulldata) => {
+d3.csv("NEWupdatedcountiesData.csv").then((fulldata) => {
   
   // create set of list of counties
   const listOfCounties = new Set();
@@ -47,29 +51,28 @@ d3.csv("countiesData.csv").then((fulldata) => {
       .attr("value", function (d) { return d; }) // corresponding value returned by the button
 
   // // get dropdown menu from HTML
-  let dropdown = document.getElementById("dropdownMenu")
+  //let dropdown = document.getElementById("dropdownMenu")
 
   // x-axis scaling function
   const xScaleBar = d3.scaleBand().range([0, BAR_WIDTH]).padding(0.3);
 
-  // x-axis domaon
+  // x-axis domain
   xScaleBar.domain(listOfYears);
 
   // create x-axis
-        BAR_CHART_FRAME.append("g")
-        .attr("transform", "translate(" + MARGINS.top + "," +
-            (BAR_HEIGHT + MARGINS.top) + ")")
-        .call(d3.axisBottom(xScaleBar).ticks(10))
-        .attr("font-size", "11px");
+        // BAR_CHART_FRAME.append("g")
+        // .attr("transform", "translate(" + MARGINS.top + "," +
+        //     (BAR_HEIGHT + MARGINS.top) + ")")
+        // .call(d3.axisBottom(xScaleBar).ticks(10))
+        // .attr("font-size", "11px");
 
-
-  dropdown.addEventListener("change", function(){
+dropdown.addEventListener("change", function(){
     // console.log(this.value)
     // d3.select("bars").remove()
     updateBarChart(this.value, fulldata)
-  })
+    })
 
-  updateBarChart("Albany", fulldata);
+     // updateBarChart("Albany", fulldata);
 
 
   function updateBarChart(county, fulldata){
@@ -84,6 +87,8 @@ d3.csv("countiesData.csv").then((fulldata) => {
     // for(let i = 0; i < selectedCounty.length; i++){
 
     // }
+
+
 
     /*
     DS4200
@@ -191,95 +196,8 @@ d3.csv("countiesData.csv").then((fulldata) => {
 
 
 }
-
-
 });
 
-// // read in bar chart data
-// d3.csv("albanyData.csv").then((data) => {
-
-//   // create scaling functuons
-//   const xScaleBar = d3.scaleBand().range([0, BAR_WIDTH]).padding(0.3);
-//   const yScaleBar = d3.scaleLinear().range([BAR_HEIGHT, 0]);
-
-//   // max values for x-axis
-//   xScaleBar.domain(data.map((d) => {
-//     return d.year
-//   }));
-
-
-//   const deathValues = [];
-//   data.map((d) => {
-//     deathValues.push(parseInt(d.deaths))
-//   });
-//   // console.log(deathValues)
-//   // console.log(d3.max(deathValues))
-
-
-//   // max values for y-axis
-//   yScaleBar.domain([0, d3.max(deathValues)]);
-
-// // create bar chart
-// BAR_CHART_FRAME.selectAll("bars")
-//         .data(data)
-//         .enter().append("rect")
-//         .attr("class", "bar")
-//         .attr("fill", "rgb(44, 123, 186)")
-//         .attr("x", (d) => {
-//             return (xScaleBar(d.year) + MARGINS.left)
-//         })
-//         .attr("y", (d) => {
-//             return (MARGINS.left + yScaleBar(d.deaths))
-//         })
-//         .attr("width", xScaleBar.bandwidth())
-//         .attr("height", (d) => {
-//             return BAR_HEIGHT - yScaleBar(d.deaths)
-//         });
-
-//         // create x-axis
-//         BAR_CHART_FRAME.append("g")
-//         .attr("transform", "translate(" + MARGINS.top + "," +
-//             (BAR_HEIGHT + MARGINS.top) + ")")
-//         .call(d3.axisBottom(xScaleBar).ticks(10))
-//         .attr("font-size", "11px");
-
-//         // create y-axis
-//         BAR_CHART_FRAME.append("g")
-//         .attr("transform", "translate(" +
-//             (MARGINS.left) + "," + (MARGINS.top) + ")")
-//         .call(d3.axisLeft(yScaleBar).ticks(10))
-//         .attr("font-size", "11px");
-
-//     // create tooltip for the bar-chart
-//     const TOOLTIP2 = d3.select(".bar-chart")
-//         .append("div")
-//         .attr("class", "tooltip2")
-//         .style("opacity", 0);
-
-//     // mouse over
-//     function handleMouseOver(event, d){
-//         TOOLTIP2.style("opacity", 1);
-//     };
-
-//     // mouse move
-//     function handleMouseMove(event, d){
-//         TOOLTIP2.html("Year: " + d.year + "<br>Death Count: " + d.deaths)
-//             .style("left", (event.pageX + 10) + "px")
-//             .style("top", (event.pageY - 50) + "px");
-//     };
-
-//     // mouse leave
-//     function handleMouseLeave(event, d){
-//         TOOLTIP2.style("opacity", 0);
-//     };
-
-//     // add event listeners
-//     BAR_CHART_FRAME.selectAll(".bar")
-//         .on("mouseover", handleMouseOver)
-//         .on("mousemove", handleMouseMove)
-//         .on("mouseleave", handleMouseLeave);
-
-// });
 
 /*
 DS4200
@@ -297,6 +215,9 @@ let MAP_FRAME = d3.select('.nys-map')
 .attr("height", FRAME_HEIGHT)
 .attr("id", "map");
 
+draw_map();
+
+function draw_map() {
 // read in json file 
 d3.json("ny_counties.geojson")
   .then(function(data) {
@@ -336,6 +257,8 @@ d3.json("ny_counties.geojson")
       csvdata.forEach(function(d){
         countiesDeath[d.county] = d.deaths;
       });
+
+
       
     // create projection and set location on webpage
     let projection = d3.geoAlbers()
@@ -361,6 +284,23 @@ d3.json("ny_counties.geojson")
 
     // append new map to frame
     let g = MAP_FRAME.append("g");
+
+
+/*
+     dropdown.addEventListener("change", function(){
+    // console.log(this.value)
+    // d3.select("bars").remove()
+    updateBarChart(this.value, fulldata)
+    })
+*/
+     dropdown.addEventListener("change", function(){
+        console.log("grPH", this.value);
+        let selectedCounty = d3.select(this).property("value");
+        let originalColor = countiesColors[selectedCounty];
+        countiesColors[selectedCounty] = "hotpink";
+        console.log("grPH", "yellow");
+        draw_map();
+        console.log("draw map")
 
     // add all "paths" (NYS Counties) to the object (attached to frame)
     g.selectAll("path")
@@ -404,8 +344,39 @@ d3.json("ny_counties.geojson")
         .text("County: " + d.properties.NAME + " || Total Deaths: " + countiesDeath[d.properties.NAME]); // return name of the county
       })
 
+      /*
+    DS4200
+    PM-04
+    Robert Hoyler, Adelaide Bsharah, Aashvi Shah, Marley Ferguson
+    Add color legend to NYS Map
+    Consulted resource for color legend: http://using-d3js.com/04_08_legends.html
+    */
 
+    let linear = d3.scaleLinear('.color-legend')
+    .domain([0,3337])
+    .range(["rgb(241, 247, 253)", "rgb(8, 48, 107)"]);
+
+  MAP_FRAME.append("g")
+    .attr("class", "color-legend")
+    .attr("transform", "translate(60,400)");
+
+  let legendLinear = d3.legendColor('.color-legend')
+    .shapeWidth(100)
+    .title("Legend: Total Deaths (2003-2019)")
+    .orient('horizontal')
+    .scale(linear);
+
+  MAP_FRAME.select(".color-legend")
+    .call(legendLinear);
+
+
+
+    })
+
+    
     });
+
+    
 
     /*
     DS4200
@@ -415,24 +386,31 @@ d3.json("ny_counties.geojson")
     Consulted resource for color legend: http://using-d3js.com/04_08_legends.html
     */
 
-    let linear = d3.scaleLinear('.color-legend')
-      .domain([0,3337])
-      .range(["rgb(241, 247, 253)", "rgb(8, 48, 107)"]);
+    // let linear = d3.scaleLinear('.color-legend')
+    //   .domain([0,3337])
+    //   .range(["rgb(241, 247, 253)", "rgb(8, 48, 107)"]);
 
-    MAP_FRAME.append("g")
-      .attr("class", "color-legend")
-      .attr("transform", "translate(60,400)");
+    // MAP_FRAME.append("g")
+    //   .attr("class", "color-legend")
+    //   .attr("transform", "translate(60,400)");
 
-    let legendLinear = d3.legendColor('.color-legend')
-      .shapeWidth(100)
-      .title("Legend: Total Deaths")
-      .orient('horizontal')
-      .scale(linear);
+    // let legendLinear = d3.legendColor('.color-legend')
+    //   .shapeWidth(100)
+    //   .title("Legend: Total Deaths (2003-2019)")
+    //   .orient('horizontal')
+    //   .scale(linear);
 
-    MAP_FRAME.select(".color-legend")
-      .call(legendLinear);
+    // MAP_FRAME.select(".color-legend")
+    //   .call(legendLinear);
 
   });
+
+}
+
+
+// draw_map()
+
+   
 
 
 
