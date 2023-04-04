@@ -60,11 +60,11 @@ d3.csv("NEWupdatedcountiesData.csv").then((fulldata) => {
   xScaleBar.domain(listOfYears);
 
   // create x-axis
-        BAR_CHART_FRAME.append("g")
-        .attr("transform", "translate(" + MARGINS.top + "," +
-            (BAR_HEIGHT + MARGINS.top) + ")")
-        .call(d3.axisBottom(xScaleBar).ticks(10))
-        .attr("font-size", "11px");
+        // BAR_CHART_FRAME.append("g")
+        // .attr("transform", "translate(" + MARGINS.top + "," +
+        //     (BAR_HEIGHT + MARGINS.top) + ")")
+        // .call(d3.axisBottom(xScaleBar).ticks(10))
+        // .attr("font-size", "11px");
 
 dropdown.addEventListener("change", function(){
     // console.log(this.value)
@@ -72,7 +72,7 @@ dropdown.addEventListener("change", function(){
     updateBarChart(this.value, fulldata)
     })
 
-     updateBarChart("Albany", fulldata);
+     // updateBarChart("Albany", fulldata);
 
 
   function updateBarChart(county, fulldata){
@@ -344,6 +344,31 @@ d3.json("ny_counties.geojson")
         .text("County: " + d.properties.NAME + " || Total Deaths: " + countiesDeath[d.properties.NAME]); // return name of the county
       })
 
+      /*
+    DS4200
+    PM-04
+    Robert Hoyler, Adelaide Bsharah, Aashvi Shah, Marley Ferguson
+    Add color legend to NYS Map
+    Consulted resource for color legend: http://using-d3js.com/04_08_legends.html
+    */
+
+    let linear = d3.scaleLinear('.color-legend')
+    .domain([0,3337])
+    .range(["rgb(241, 247, 253)", "rgb(8, 48, 107)"]);
+
+  MAP_FRAME.append("g")
+    .attr("class", "color-legend")
+    .attr("transform", "translate(60,400)");
+
+  let legendLinear = d3.legendColor('.color-legend')
+    .shapeWidth(100)
+    .title("Legend: Total Deaths (2003-2019)")
+    .orient('horizontal')
+    .scale(linear);
+
+  MAP_FRAME.select(".color-legend")
+    .call(legendLinear);
+
 
 
     })
@@ -361,22 +386,22 @@ d3.json("ny_counties.geojson")
     Consulted resource for color legend: http://using-d3js.com/04_08_legends.html
     */
 
-    let linear = d3.scaleLinear('.color-legend')
-      .domain([0,3337])
-      .range(["rgb(241, 247, 253)", "rgb(8, 48, 107)"]);
+    // let linear = d3.scaleLinear('.color-legend')
+    //   .domain([0,3337])
+    //   .range(["rgb(241, 247, 253)", "rgb(8, 48, 107)"]);
 
-    MAP_FRAME.append("g")
-      .attr("class", "color-legend")
-      .attr("transform", "translate(60,400)");
+    // MAP_FRAME.append("g")
+    //   .attr("class", "color-legend")
+    //   .attr("transform", "translate(60,400)");
 
-    let legendLinear = d3.legendColor('.color-legend')
-      .shapeWidth(100)
-      .title("Legend: Total Deaths (2003-2019)")
-      .orient('horizontal')
-      .scale(linear);
+    // let legendLinear = d3.legendColor('.color-legend')
+    //   .shapeWidth(100)
+    //   .title("Legend: Total Deaths (2003-2019)")
+    //   .orient('horizontal')
+    //   .scale(linear);
 
-    MAP_FRAME.select(".color-legend")
-      .call(legendLinear);
+    // MAP_FRAME.select(".color-legend")
+    //   .call(legendLinear);
 
   });
 
