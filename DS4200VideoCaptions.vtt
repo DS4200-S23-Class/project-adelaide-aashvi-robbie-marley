@@ -1,0 +1,56 @@
+WEBVTT
+Kind: captions
+Language: en
+
+00:00:03.780 --> 00:00:09.960
+there we decided to visualize opioid death data;
+in New York state from 2003 to 2019 our data;
+
+00:00:09.960 --> 00:00:14.460
+source is owned and published by the New York State;
+Department of Health and it consisted of Year New;
+
+00:00:14.460 --> 00:00:18.840
+York state county and a number of opioid deaths;
+that occurred that occurred in that county per;
+
+00:00:18.840 --> 00:00:26.460
+year so to begin we first must use the drop down;
+to select a specific County in New York state so;
+
+00:00:26.460 --> 00:00:31.620
+for this demonstration I'll choose Albany and from;
+there we get two visualizations that get generated;
+
+00:00:32.280 --> 00:00:37.920
+first the first visualization is a bar chart that;
+shows the number of deaths that occurred in the;
+
+00:00:37.920 --> 00:00:43.260
+specific chosen County each year hovering;
+over the bar chart will reveal a tool tip;
+
+00:00:43.260 --> 00:00:48.120
+that again shows a year and the total death;
+count in that county for that specific year&;
+
+00:00:49.560 --> 00:00:57.000
+next we have a map of New York State the map;
+consists of a heat map where the darker shade of;
+
+00:00:57.000 --> 00:01:03.000
+blue represents a greater total number of deaths;
+that occurred in the county from the specified;
+
+00:01:03.000 --> 00:01:09.180
+timeline which is 2003 to 2019 highlighting;
+over accounting will reveal the name of the;
+
+00:01:09.180 --> 00:01:15.120
+county the total number of deaths that occurred;
+and the county visualized visualized in pink;
+
+00:01:15.120 --> 00:01:20.400
+is the county chosen from the drop down that we;
+specified in the beginning of the demonstration
+
